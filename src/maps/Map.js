@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Autocomplete from './Autocomplete';
 
 
 class Map extends Component {
@@ -12,7 +13,8 @@ class Map extends Component {
         lat: lat,
         lng: lng
       },
-      place: null
+      place: null,
+      map : null
     }
   }
 
@@ -31,7 +33,7 @@ class Map extends Component {
   }
 
   recenterMap() {
-    const map = this.map;
+    const map = this.state.map;
     const curr = this.state.currentLocation;
     const google = this.props.google;
     const maps = google.maps;
@@ -74,25 +76,50 @@ class Map extends Component {
         center: center,
         zoom: zoom
       });
-      this.map = new maps.Map(node, mapConfig);
+      const createdMap = new maps.Map(node, mapConfig);
+      console.log("createdMap");
+      console.log(createdMap);
+      this.setState({
+        map : createdMap
+      })
 
+/*
       const aref = this.refs.autocomplete;
+
       const autoNode = ReactDOM.findDOMNode(aref);
+
       var autocomplete = new maps.places.Autocomplete(autoNode);
       autocomplete.bindTo('bounds', this.map);
 
       autocomplete.addListener('place_changed', () => {
             const place = autocomplete.getPlace();
+            console.log("autocomplete getplace");
             console.log(place);
             if (!place.geometry) {
               return;
             }
+
+            if(place.geometry.viewport) {
+              this.map.fitBounds(place.geometry.viewport);
+            } else {
+              this.map.setCenter(place.geometry.location);
+              this.map.setZoom(17);
+            }
+
+            this.setState({
+              place: place,
+              position: place.geometry.location
+            })
+
       });
-
-
+      */
       /*maps.event.trigger(this.map, 'ready');*/
        this.forceUpdate();
     }
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
   }
 
 
@@ -103,7 +130,7 @@ class Map extends Component {
 
         return React.Children.map(children, c => {
           return React.cloneElement(c, {
-            map: this.map,
+            map: this.state.map,
             google: this.props.google,
             mapCenter: this.state.currentLocation
           });
@@ -111,21 +138,29 @@ class Map extends Component {
       }
 
   render() {
+
+    console.log("render()");
+    console.log(this.state.map);
+
     return (
       <div>
-      <form onSubmit={this.onSubmit}>
-                <input
+        <Autocomplete map={this.state.map} google={this.props.google} />
+    {/*  <form onSubmit={this.onSubmit}>
+        <div className="input-group">
+          <span className="input-group-addon" id="basic-addon1">Search</span>
+                <input className="form-control"
                   ref='autocomplete'
                   type="text"
                   placeholder="Enter a location" />
-                <input
-                  type='submit'
-                  value='Go' />
-              </form>
-      <div style={this.props.style} ref="map">
-        Loading map...
-      </div>
-        {this.renderChildren()}
+
+        </div>
+      </form>
+      */}
+        <hr />
+        <div style={this.props.style} ref="map">
+          Loading map...
+        </div>
+          {this.renderChildren()}
       </div>
     )
   }

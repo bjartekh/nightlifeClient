@@ -18,7 +18,7 @@ render() {
 
     return (
       <div className="container">
-      <h1>Guiness Travel Guide</h1>
+      <h1>Guinness Travel Guide<small> - the place for guinness lovers</small></h1>
       <div className="row">
           <Map style={style} google={this.props.google} >
             <Marker position={pos} />
