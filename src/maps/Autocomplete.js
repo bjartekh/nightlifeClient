@@ -13,7 +13,10 @@ class Autocomplete extends Component {
 
   componentDidUpdate() {
     console.log("Autocomplete:componentDidUpdate")
-    this.renderAutocomplete();
+    if(this.props && this.props.google && this.props.map)
+    {
+      this.renderAutocomplete();
+    }
   }
 
 
@@ -69,16 +72,14 @@ class Autocomplete extends Component {
 
 
     return(
-      <form onSubmit={this.onSubmit}>
         <div className="input-group">
           <span className="input-group-addon" id="basic-addon1">Search</span>
                 <input className="form-control"
                   ref='autocomplete'
                   type="text"
-                  placeholder="Enter a location" />
+                  placeholder="Enter a location and thou might be lead to a chalice of instant gratification" />
 
         </div>
-      </form>
 
     )
   }
