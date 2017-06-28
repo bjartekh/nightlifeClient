@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Map from './Map';
 
-class AddGuinnessPlace extends Component {
+class AddPlace extends Component {
   constructor(props) {
     super(props);
     this.google = props.google;
@@ -35,7 +35,7 @@ render() {
 
     <form>
         <div className="form-group">
-            <label for="pubname">Pubname</label>
+            <label htmlFor="pubname">Pubname</label>
             <input name="venueName" className="form-control"
                   type="text"
                   placeholder="Name of Guinness place / pub / venue" id="pubname" value={this.state.venueName} onChange={(e) => this.handleChange(e)} />
@@ -59,4 +59,4 @@ render() {
 
 }
 
-export default AddGuinnessPlace;
+export default AddPlace;

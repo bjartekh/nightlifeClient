@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Map from './Map';
-import AddGuinnessPlace from './AddGuinnessPlace';
+import AddPlace from './AddPlace';
 import Marker from './Marker';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -21,26 +21,29 @@ render() {
 
     return (
       <div className="container">
-
-      <h1>Guinness Travel Guide<small> - the place for guinness lovers</small></h1>
       <div className="row">
       <div className="nav">
       <Tabs>
         <TabList>
-          <Tab>Find Guinness</Tab>
+          <Tab>Find</Tab>
+          <Tab>Nearby</Tab>
           <Tab>Add</Tab>
           <Tab>Sign In</Tab>
         </TabList>
 
         <TabPanel forceRender={true}>
           <Map style={style} google={this.props.google} >
-            <Marker position={pos} />
+            
           </Map>
         </TabPanel>
         <TabPanel>
-          <h2>Add a place you know of</h2>
-          <AddGuinnessPlace google={this.props.google} />
+          <h2>Nearby</h2>
         </TabPanel>
+        <TabPanel>
+          <h2>Add a place</h2>
+          <AddPlace google={this.props.google} />
+        </TabPanel>
+
         <TabPanel>
           <h2>Sign in</h2>
           <p>Use google</p>

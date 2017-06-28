@@ -26,6 +26,7 @@ class Map extends Component {
       this.initMap()
     }
     if (prevState.currentLocation !== this.state.currentLocation) {
+        console.log("recenterMap");
         this.recenterMap();
     }
 
@@ -46,8 +47,10 @@ class Map extends Component {
 
   componentDidMount() {
     if(navigator && navigator.geolocation) {
+      console.log("navigator enabled");
       navigator.geolocation.getCurrentPosition((pos) => {
         const coords = pos.coords;
+        console.log(coords);
         this.setState({
           currentLocation: {
             lat: coords.latitude,
@@ -82,6 +85,11 @@ class Map extends Component {
       this.setState({
         map : createdMap
       })
+
+      const marker = new google.maps.Marker({
+        position: this.state.currentLocation,
+        map: createdMap
+      });
 
 /*
       const aref = this.refs.autocomplete;
@@ -145,17 +153,6 @@ class Map extends Component {
     return (
       <div>
         <Autocomplete map={this.state.map} google={this.props.google} />
-    {/*  <form onSubmit={this.onSubmit}>
-        <div className="input-group">
-          <span className="input-group-addon" id="basic-addon1">Search</span>
-                <input className="form-control"
-                  ref='autocomplete'
-                  type="text"
-                  placeholder="Enter a location" />
-
-        </div>
-      </form>
-      */}
         <hr />
         <div style={this.props.style} ref="map">
           Loading map...

@@ -2,3 +2,16 @@ body {
   font-family: sans-serif;
   background-color: #fffff9;
 }
+
+.navbar-default {
+    background-color: #000000;
+    border-color: #ffcc00;
+
+}
+
+.navbar-additional {
+  background-image: url("/images/bg_line.png");
+  background-repeat: repeat-x;
+  background-position: left center;
+
+}
